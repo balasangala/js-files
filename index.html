@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <style>
+    ul li {
+        list-style: none;
+        font-size: 20px;
+        font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+        margin-bottom: 10px;
+        color: #ffffff;
+        
+        
+    }
+
+    ul li {
+        width: 130px;
+        background-color: #000;
+        
+    }
+    
+    
+    </style>
+</head>
+<body>
+
+    <button id="btn">Click</button>
+
+    <div id="output2"></div>
+
+    <script>
+       var btn =  document.getElementById('btn');
+
+       btn.addEventListener('click', showData);
+
+       function showData(){
+
+           var xhr = new XMLHttpRequest();
+
+           xhr.open("GET", "https://reqres.in/api/users?page=2", true);
+
+           xhr.onload = function(){
+               var user = JSON.parse(xhr.responseText);
+                var output = "";
+                 //var output2 = "";
+                if( this.status == 200){
+                    output += `<ul> 
+                    <li>${user.page}</li>
+                    
+                    <li>${user.per_page}</li>
+                    <li>${user.total}</li>
+                    <li>${user.total_pages}</li>
+                    </ul>
+                    `
+                   for(var i in user.data){
+                       output += 
+                       `<ul>
+                        <li> ${user.data[i].id} </li>
+                       <li> ${user.data[i].first_name} </li>
+                       <li> ${user.data[i].last_name} </li>
+                       <li> <img src="${user.data[i].avatar}" >  </li>
+                       </ul>
+                       `;
+                       
+                   }
+
+                
+
+                   document.querySelector('#output').innerHTML = output;
+                  
+
+               }
+
+           }
+
+           xhr.send();
+
+       }
+
+    
+    </script>
+    
+</body>
+</html>
